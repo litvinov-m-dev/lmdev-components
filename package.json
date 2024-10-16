@@ -1,0 +1,55 @@
+{
+  "name": "lmdev-components",
+  "version": "0.0.1",
+  "description": "Lean React component library to kitbash projects in a consistent lmdev style.",
+  "main": "dist/lmdev-components.cjs.js",
+  "module": "dist/lmdev-components.esm.js",
+  "browser": "dist/lmdev-components.umd.js",
+  "scripts": {
+    "build": "rollup -c --bundleConfigAsCjs",
+    "dev": "rollup -c -w --bundleConfigAsCjs",
+    "test": "ts-node test/test.ts",
+    "pretest": "npm run build",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/litvinov-m-dev/lmdev-components.git"
+  },
+  "keywords": [
+    "components",
+    "react",
+    "kitbash",
+    "lmdev"
+  ],
+  "author": "litvinov.mikhail.dev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/litvinov-m-dev/lmdev-components/issues"
+  },
+  "homepage": "https://github.com/litvinov-m-dev/lmdev-components#readme",
+  "devDependencies": {
+    "@chromatic-com/storybook": "^1.9.0",
+    "@rollup/plugin-commonjs": "^28.0.1",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-typescript": "^12.1.1",
+    "@storybook/addon-essentials": "^8.3.5",
+    "@storybook/addon-interactions": "^8.3.5",
+    "@storybook/addon-links": "^8.3.5",
+    "@storybook/addon-onboarding": "^8.3.5",
+    "@storybook/blocks": "^8.3.5",
+    "@storybook/react": "^8.3.5",
+    "@storybook/react-vite": "^8.3.5",
+    "@storybook/test": "^8.3.5",
+    "@types/react": "^18.3.11",
+    "dotenv": "^16.4.5",
+    "react": "^18.3.1",
+    "rollup": "^4.24.0",
+    "storybook": "^8.3.5",
+    "typescript": "^5.6.3"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1"
+  }
+}
