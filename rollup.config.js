@@ -1,12 +1,16 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
-import pkg from './package.json';
+import terser from '@rollup/plugin-terser';
+import postcss from 'rollup-plugin-postcss';
+import dts from 'rollup-plugin-dts';
+
+import packageJson from './package.json';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const production = process.env.PROD; // Do not emit sourcemaps on development build/watch
+const production = process.env.PROD === 'true';
 
 export default [
 	// browser-friendly UMD build
@@ -14,14 +18,23 @@ export default [
 		input: 'src/index.ts',
 		output: {
 			name: 'lmdev-components',
-			file: pkg.browser,
+			file: packageJson.browser,
 			format: 'umd',
-      sourcemap: !production,
+      sourcemap: production,
 		},
 		plugins: [
-			resolve(),   // so Rollup can find `ms`
-			commonjs(),  // so Rollup can convert `ms` to an ES module
-			typescript({ sourceMap: !production }) // so Rollup can convert TypeScript to JavaScript
+			resolve({
+        ignoreGlobal: false,
+        include: ['node_modules/**'],
+        skip: ['react', 'react-dom'], // to avoid errors like "Cannot read properties of null (reading 'useRef')".
+      }), // so Rollup can find `ms`
+			commonjs(), // so Rollup can convert `ms` to an ES module
+			typescript({ tsconfig: "./tsconfig.json" }), // so Rollup can convert TypeScript to JavaScript
+      postcss({
+        extract: true, 
+        minimize: true,
+      }),
+      terser(),
 		]
 	},
 
@@ -35,11 +48,29 @@ export default [
 		input: 'src/index.ts',
 		external: ['ms'],
 		plugins: [
-			typescript({ sourceMap: !production }) // so Rollup can convert TypeScript to JavaScript
+      resolve({
+        ignoreGlobal: false,
+        include: ['node_modules/**'],
+        skip: ['react', 'react-dom'],
+      }),
+      commonjs(),
+			typescript({ tsconfig: "./tsconfig.json" }),
+      postcss({
+        extract: true, 
+        minimize: true,
+      }),
+      terser(),
 		],
 		output: [
-			{ file: pkg.main, format: 'cjs', sourcemap: !production },
-			{ file: pkg.module, format: 'es', sourcemap: !production }
+			{ file: packageJson.main, format: 'cjs', sourcemap: production },
+			{ file: packageJson.module, format: 'es', sourcemap: production },
 		]
-	}
+	},
+
+  {
+    input: "dist/src/index.d.ts",
+    output: [{ file: "dist/index.d.ts", format: "esm" }],
+    plugins: [dts.default()],
+    external: [/\.css$/],
+  }
 ];

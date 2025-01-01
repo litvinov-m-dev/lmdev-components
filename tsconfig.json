@@ -5,15 +5,16 @@
     "module": "ESNext",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
     "strict": true,
     "skipLibCheck": true,
     "rootDir": ".",
     "jsx": "react",
     "declaration": true,
-    "sourceMap": true,
     "outDir": "dist",
     "moduleResolution": "Node",
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
+    "allowSyntheticDefaultImports": true,
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", ".storybook"]
