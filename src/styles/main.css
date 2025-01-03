@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html[data-theme='default'] {
+    --color-bg: 34, 39, 46;
+    --color-primary: 45, 51, 59;
+  }
+
+  html[data-theme='dark'] {
+    --color-bg: 20, 61, 42;
+    --color-primary: 13, 82, 66;
+  }
+}
