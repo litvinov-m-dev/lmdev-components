@@ -1,18 +1,18 @@
 import React, { useCallback } from 'react';
-import { ButtonProps, ButtonType } from './buttonTypes';
+import { ButtonProps, ButtonMode } from './buttonTypes';
 
-const Button = ({ styleType, ...htmlProps }: ButtonProps) => {
+const Button = ({ mode = ButtonMode.PRIMARY , ...htmlProps }: ButtonProps) => {
   const buildBgColor = useCallback(() => {
-    if (styleType === ButtonType.PRIMARY) {
+    if (mode === ButtonMode.PRIMARY) {
       return 'bg-primary';
     }
 
-    if (styleType === ButtonType.SECONDARY) {
+    if (mode === ButtonMode.SECONDARY) {
       return 'bg-bg';
     }
 
     return 'bg-primary';
-  }, [styleType]);
+  }, [mode]);
 
   return (
     <button
